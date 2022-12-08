@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.commands.DriveCommand;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CollectorSubsystem;
 import org.a05annex.frc.A05RobotContainer;
 import org.a05annex.frc.commands.A05DriveCommand;
 
@@ -25,8 +27,10 @@ public class RobotContainer extends A05RobotContainer
     // The robot's subsystems and commands are defined here...
     // NavX, DriveSubsystem, DriveXbox have already been made in A05RobotContainer
     //TODO: Add any additional subsystems and commands here
+    ArmSubsystem m_armSubsystem = ArmSubsystem.getInstance();
+    CollectorSubsystem m_collectorSubsystem = CollectorSubsystem.getInstance();
 
-    //TODO: Uncomment if you have alternate xbox controller, you need to uncomment a constant too
+    //TODO: Uncomment if you have alternate xbox controller, you need to uncomment in constants too
     //XboxController m_altXbox = new XboxController(Constants.ALT_XBOX_PORT);
 
     // controller button declarations
@@ -83,5 +87,10 @@ public class RobotContainer extends A05RobotContainer
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
 
         m_xboxBack.whenPressed(new InstantCommand(m_navx::initializeHeadingAndNav)); // Reset the NavX field relativity
+        m_xboxA.whenPressed(new InstantCommand(m_armSubsystem::goToCollectPosition));
+        m_xboxX.whenPressed(new InstantCommand(m_armSubsystem::goToDrivePosition));
+        m_xboxY.whenPressed(new InstantCommand(m_armSubsystem::goToDumpPosition));
+        m_xboxB.whenPressed(new InstantCommand(m_collectorSubsystem::spinForward));
+        m_xboxRightBumper.whenPressed(new InstantCommand(m_collectorSubsystem::spinBackward));
     }
 }

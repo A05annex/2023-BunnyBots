@@ -21,12 +21,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public final class Constants extends A05Constants
 {
     public static final class CAN_Devices {
-        /*
         public static final int
                 // Non-Drive Motors
-                MOTOR1 = port number,
-                MOTOR2 = port number;
-         */
+                ARM_MOTOR = 9,
+                COLLECTOR_MOTOR = 10;
     }
 
 
