@@ -12,14 +12,20 @@ public class CollectorSubsystem extends SubsystemBase {
 
     private double speed = 0.5;
 
-    private CollectorSubsystem() {}
+    private CollectorSubsystem() {
+        m_motor.restoreFactoryDefaults();
+    }
 
     public void spinForward() {
-        m_motor.setVoltage(speed);
+        m_motor.set(speed);
     }
 
     public void spinBackward() {
-        m_motor.setVoltage(-speed);
+        m_motor.set(-speed);
+    }
+
+    public void stop() {
+        m_motor.set(0.0);
     }
 
     /**

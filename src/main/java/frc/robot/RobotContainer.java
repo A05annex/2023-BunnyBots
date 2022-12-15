@@ -85,12 +85,17 @@ public class RobotContainer extends A05RobotContainer
     {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-
         m_xboxBack.whenPressed(new InstantCommand(m_navx::initializeHeadingAndNav)); // Reset the NavX field relativity
         m_xboxA.whenPressed(new InstantCommand(m_armSubsystem::goToCollectPosition));
         m_xboxX.whenPressed(new InstantCommand(m_armSubsystem::goToDrivePosition));
         m_xboxY.whenPressed(new InstantCommand(m_armSubsystem::goToDumpPosition));
-        m_xboxB.whenPressed(new InstantCommand(m_collectorSubsystem::spinForward));
-        m_xboxRightBumper.whenPressed(new InstantCommand(m_collectorSubsystem::spinBackward));
+
+        m_xboxB.whenHeld(new InstantCommand(m_collectorSubsystem::spinForward));
+        m_xboxB.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
+        m_xboxStart.whenPressed(new InstantCommand(m_collectorSubsystem::spinBackward));
+        m_xboxStart.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
+
+        m_xboxRightBumper.whenPressed(new InstantCommand(m_armSubsystem::bumpUp));
+        m_xboxLeftBumper.whenPressed(new InstantCommand(m_armSubsystem::bumpDown));
     }
 }

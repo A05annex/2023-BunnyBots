@@ -6,8 +6,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CollectorSubsystem;
 import org.a05annex.frc.A05Constants;
 import org.a05annex.frc.A05Robot;
 
@@ -48,6 +51,9 @@ public class Robot extends A05Robot
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         setRobotContainer(new RobotContainer());
+
+        //TODO: Set this to true if you want to print debug telemetry
+        Constants.setPrintDebug(false);
     }
     
 
@@ -82,6 +88,7 @@ public class Robot extends A05Robot
         // Cancels autonomous command
         super.teleopInit();
         //TODO: Can add other things here
+        //ArmSubsystem.getInstance().goToCollectPosition();
     }
     
     

@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -14,16 +15,17 @@ public class ArmSubsystem extends SubsystemBase {
     private RelativeEncoder m_encoder = m_motor.getEncoder();
     private SparkMaxPIDController m_motorPID = m_motor.getPIDController();
 
-    private double
-            collectPosition = 0.0,
-            drivePosition = 0.0,
-            startPosition = 0.0,
-            dumpPosition = 0.0;
+    private int COLLECT_POSITION = 1, DRIVE_POSITION = 2, START_POSITION = 0, DUMP_POSITION = 3;
+
+    private final double positionInc = 2.0;
+
+    private double positions[] = {168.256, 0.0, 90.0, 181.5};
+    private int currentIndex;
 
     private double
-            kP = 0.5,
-            kI = 0.2,
-            kIZone = 0.0;
+            kP = 0.1,
+            kI = 0.0005,
+            kIZone = 2.0;
 
     /**
      * Creates a new instance of this ArmSubsystem. This constructor
@@ -31,12 +33,15 @@ public class ArmSubsystem extends SubsystemBase {
      * the {@link #getInstance()} method to get the singleton instance.
      */
     private ArmSubsystem() {
+        m_motor.restoreFactoryDefaults();
+        m_motor.setInverted(true);
         initializeArmEncoder();
         setPID(m_motorPID, kP,kI, kIZone);
     }
 
     public void initializeArmEncoder() {
-        m_motorPID.setReference(startPosition, CANSparkMax.ControlType.kPosition);
+        m_encoder.setPosition(positions[START_POSITION]);
+        currentIndex = START_POSITION;
     }
 
     public double getArmPosition() {
@@ -52,15 +57,37 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void goToCollectPosition() {
-        m_motorPID.setReference(collectPosition, CANSparkMax.ControlType.kPosition);
+        currentIndex = COLLECT_POSITION;
+        goToPosition();
     }
 
     public void goToDrivePosition() {
-        m_motorPID.setReference(drivePosition, CANSparkMax.ControlType.kPosition);
+        currentIndex = DRIVE_POSITION;
+        goToPosition();
     }
 
     public void goToDumpPosition() {
-        m_motorPID.setReference(dumpPosition, CANSparkMax.ControlType.kPosition);
+        currentIndex = DUMP_POSITION;
+        goToPosition();
+    }
+
+    public void goToPosition() {
+        m_motorPID.setReference(positions[currentIndex], CANSparkMax.ControlType.kPosition);
+    }
+
+    public void bumpUp() {
+        positions[currentIndex] += positionInc;
+        goToPosition();
+    }
+
+    public void bumpDown() {
+        positions[currentIndex] -= positionInc;
+        goToPosition();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Arm Position", getArmPosition());
     }
 
     /**
