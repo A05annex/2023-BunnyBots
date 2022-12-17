@@ -5,8 +5,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.XboxController;
 import org.a05annex.frc.A05Constants;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,17 +25,14 @@ public final class Constants extends A05Constants
                 COLLECTOR_MOTOR = 10;
     }
 
-
-    //TODO: Set which cameras you have
-    public static final boolean HAS_USB_CAMERA = false;
+    public static final boolean HAS_USB_CAMERA = true;
     public static final boolean HAS_LIMELIGHT = false;
 
 
     /*
-        DRIVE_XBOX_PORT = 0 (Set in A05Constants)
+        DRIVE_XBOX_PORT = 0 (Set in A05Constants automatically)
         Port 0 is whichever controller was plugged in first, not a specific port.
     */
-    //TODO: Comment in if you want 2nd controller, you also need to uncomment something in RobotContainer
     //public static final int ALT_XBOX_PORT = 1; // 2nd Controller for more controls
 
     // kP for keeping drive at the same orientation
@@ -45,12 +40,10 @@ public final class Constants extends A05Constants
 
     // for practice, length and width from center of the wheels, in m (note chassis is 30" square,
     // the bolt pattern is 29" square, wheels are 2.75" in from the bolt pattern or centered on the
-    // corners of a 23.5"(0.5969m) square.
+    // corners of a 23.5"(0.5969 m) square.
     // For competition, length and width from center of the wheels, in m (note chassis is 28" square,
     // the bolt pattern is 27" square, wheels are 2.75" in from the bolt pattern or centered on the
-    // corners of a 21.5"(0.5461m) square.
-    //TODO: set calibration constants here for your relevant robot. rf = right front, lr = left rear, etc
-    //TODO: Verify dimensions of your robot
+    // corners of a 21.5"(0.5461 m) square.
     /**
      * The geometry and calibration specific to a swerve drive robot base. We currently have 2 bases, the first being
      * a <i>prototyping/practice</i> base that should always be in working condition for drive tuning/testing,

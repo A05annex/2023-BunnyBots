@@ -2,15 +2,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.RobotContainer;
 import org.a05annex.frc.A05Constants;
 import org.a05annex.frc.commands.A05DriveCommand;
 import org.a05annex.util.AngleD;
-import org.a05annex.util.AngleUnit;
 
 /**
  * Drive command is here because you will likely need to override the serve (targeting, competition specific reason)
  */
 public class DriveCommand extends A05DriveCommand {
+
+    final JoystickButton m_xboxRightBumper;
 
     /**
      * Default command for DriveSubsystem. Left stick moves the robot field-relatively, and right stick X rotates.
@@ -21,6 +24,8 @@ public class DriveCommand extends A05DriveCommand {
         super(xbox, driver);
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
+
+        m_xboxRightBumper = new JoystickButton(m_driveXbox, 6);
     }
 
     @Override
@@ -36,11 +41,14 @@ public class DriveCommand extends A05DriveCommand {
         //super.execute();
 
         conditionStick();
-        m_driveSubsystem.swerveDriveFieldRelative(m_conditionedDirection, m_conditionedSpeed, m_conditionedRotate);
-
-        SmartDashboard.putNumber("Drive Forward", m_conditionedSpeed*(new AngleD(m_conditionedDirection).subtract(m_navx.getHeading()).cos()));
-        SmartDashboard.putNumber("Drive Strafe: ", m_conditionedSpeed*(new AngleD(m_conditionedDirection).subtract(m_navx.getHeading()).sin()));
-        SmartDashboard.putNumber("Rotation:", m_conditionedRotate);
-        SmartDashboard.putNumber("NavX", m_navx.getHeading().getDegrees());
+        if (m_xboxRightBumper.get()) {
+            m_driveSubsystem.swerveDriveRobotRelative(m_conditionedDirection, m_conditionedSpeed, m_conditionedRotate);
+        } else {
+            m_driveSubsystem.swerveDriveFieldRelative(m_conditionedDirection, m_conditionedSpeed, m_conditionedRotate);
+        }
+        //SmartDashboard.putNumber("Drive Forward", m_conditionedSpeed*(new AngleD(m_conditionedDirection).subtract(m_navx.getHeading()).cos()));
+        //SmartDashboard.putNumber("Drive Strafe: ", m_conditionedSpeed*(new AngleD(m_conditionedDirection).subtract(m_navx.getHeading()).sin()));
+        //SmartDashboard.putNumber("Rotation:", m_conditionedRotate);
+        //SmartDashboard.putNumber("NavX", m_navx.getHeading().getDegrees());
     }
 }

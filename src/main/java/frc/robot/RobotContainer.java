@@ -67,9 +67,6 @@ public class RobotContainer extends A05RobotContainer
 
         m_driveSubsystem.setDefaultCommand(m_driveCommand);
 
-
-        //TODO: add auto
-
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -94,8 +91,5 @@ public class RobotContainer extends A05RobotContainer
         m_xboxB.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
         m_xboxStart.whenPressed(new InstantCommand(m_collectorSubsystem::spinBackward));
         m_xboxStart.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
-
-        m_xboxRightBumper.whenPressed(new InstantCommand(m_armSubsystem::bumpUp));
-        m_xboxLeftBumper.whenPressed(new InstantCommand(m_armSubsystem::bumpDown));
     }
 }

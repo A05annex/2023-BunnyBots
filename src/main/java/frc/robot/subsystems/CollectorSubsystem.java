@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class CollectorSubsystem extends SubsystemBase {
-    private CANSparkMax m_motor = new CANSparkMax(Constants.CAN_Devices.COLLECTOR_MOTOR,
+    private final CANSparkMax m_motor = new CANSparkMax(Constants.CAN_Devices.COLLECTOR_MOTOR,
             CANSparkMaxLowLevel.MotorType.kBrushless);
 
-    private double speed = 0.5;
+    private final double speed = 0.65;
 
     private CollectorSubsystem() {
         m_motor.restoreFactoryDefaults();
