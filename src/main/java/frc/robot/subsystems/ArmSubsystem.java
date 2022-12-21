@@ -19,7 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     private final double positionInc = 2.0;
 
-    private double positions[] = {168.256, 0.0, 90.0, 181.5};
+    private double positions[] = {168.256, 0.0, 60.0, 181.5};
     private int currentIndex;
 
     private double

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotContainer;
 import org.a05annex.frc.A05Constants;
 import org.a05annex.frc.commands.A05DriveCommand;
+import org.a05annex.frc.subsystems.DriveSubsystem;
 import org.a05annex.util.AngleD;
 
 /**
@@ -39,13 +40,10 @@ public class DriveCommand extends A05DriveCommand {
         //TODO: Refer to the documentation. Much of the code you want to run is already packaged in callable methods
         //This runs the default swerve calculations for xbox control
         //super.execute();
-
         conditionStick();
-        if (m_xboxRightBumper.get()) {
-            m_driveSubsystem.swerveDriveRobotRelative(m_conditionedDirection, m_conditionedSpeed, m_conditionedRotate);
-        } else {
-            m_driveSubsystem.swerveDriveFieldRelative(m_conditionedDirection, m_conditionedSpeed, m_conditionedRotate);
-        }
+
+        m_driveSubsystem.swerveDrive(m_conditionedDirection, m_conditionedSpeed, m_conditionedRotate);
+        SmartDashboard.putBoolean("Field Relative?", m_driveSubsystem.getDriveMode());
         //SmartDashboard.putNumber("Drive Forward", m_conditionedSpeed*(new AngleD(m_conditionedDirection).subtract(m_navx.getHeading()).cos()));
         //SmartDashboard.putNumber("Drive Strafe: ", m_conditionedSpeed*(new AngleD(m_conditionedDirection).subtract(m_navx.getHeading()).sin()));
         //SmartDashboard.putNumber("Rotation:", m_conditionedRotate);

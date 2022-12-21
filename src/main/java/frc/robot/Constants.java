@@ -33,7 +33,7 @@ public final class Constants extends A05Constants
         DRIVE_XBOX_PORT = 0 (Set in A05Constants automatically)
         Port 0 is whichever controller was plugged in first, not a specific port.
     */
-    //public static final int ALT_XBOX_PORT = 1; // 2nd Controller for more controls
+    public static final int ALT_XBOX_PORT = 1; // 2nd Controller for more controls
 
     // kP for keeping drive at the same orientation
     public static double DRIVE_ORIENTATION_kP = 1.2;
@@ -66,7 +66,7 @@ public final class Constants extends A05Constants
     };
 
     public static final A05Constants.AutonomousPath[] AUTONOMOUS_PATHS = {
-            new A05Constants.AutonomousPath("Sample Path", 0, "samplePath.json")
+            new A05Constants.AutonomousPath("Straight Dump", 0, "straightDump.json")
     };
 
     public static final A05Constants.DriverSettings[] DRIVER_SETTINGS = {

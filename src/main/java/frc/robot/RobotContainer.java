@@ -31,7 +31,7 @@ public class RobotContainer extends A05RobotContainer
     CollectorSubsystem m_collectorSubsystem = CollectorSubsystem.getInstance();
 
     //TODO: Uncomment if you have alternate xbox controller, you need to uncomment in constants too
-    //XboxController m_altXbox = new XboxController(Constants.ALT_XBOX_PORT);
+    XboxController m_altXbox = new XboxController(Constants.ALT_XBOX_PORT);
 
     // controller button declarations
     JoystickButton m_xboxA = new JoystickButton(m_driveXbox, 1);
@@ -46,7 +46,11 @@ public class RobotContainer extends A05RobotContainer
     JoystickButton m_xboxRightStickPress = new JoystickButton(m_driveXbox, 10);
 
     // alt xbox controller buttons
-    //JoystickButton m_altXboxA = new JoystickButton(m_altXbox, 1);
+    JoystickButton m_altXboxA = new JoystickButton(m_altXbox, 1);
+    JoystickButton m_altXboxB = new JoystickButton(m_altXbox, 2);
+    JoystickButton m_altXboxX = new JoystickButton(m_altXbox, 3);
+    JoystickButton m_altXboxY = new JoystickButton(m_altXbox, 4);
+    JoystickButton m_altXboxStart = new JoystickButton(m_altXbox, 8);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
@@ -58,12 +62,6 @@ public class RobotContainer extends A05RobotContainer
                 m_robotSettings.m_lf, m_robotSettings.m_lr);
 
         m_driveCommand = new DriveCommand(m_driveXbox, m_driver);
-
-        //TODO: Use these if you want custom drive sensitivity
-//        A05DriveCommand.DRIVE_SPEED_GAIN = 0.7D;
-//        A05DriveCommand.DRIVE_SPEED_SENSITIVITY = 2.0D;
-//        A05DriveCommand.ROTATE_GAIN = 0.5D;
-//        A05DriveCommand.ROTATE_SENSITIVITY = 1.5D;
 
         m_driveSubsystem.setDefaultCommand(m_driveCommand);
 
@@ -82,14 +80,28 @@ public class RobotContainer extends A05RobotContainer
     {
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+        // Drive Xbox Controls
         m_xboxBack.whenPressed(new InstantCommand(m_navx::initializeHeadingAndNav)); // Reset the NavX field relativity
-        m_xboxA.whenPressed(new InstantCommand(m_armSubsystem::goToCollectPosition));
-        m_xboxX.whenPressed(new InstantCommand(m_armSubsystem::goToDrivePosition));
-        m_xboxY.whenPressed(new InstantCommand(m_armSubsystem::goToDumpPosition));
+
+//        m_xboxA.whenPressed(new InstantCommand(m_armSubsystem::goToCollectPosition));
+//        m_xboxX.whenPressed(new InstantCommand(m_armSubsystem::goToDrivePosition));
+//        m_xboxY.whenPressed(new InstantCommand(m_armSubsystem::goToDumpPosition));
 
         m_xboxB.whenHeld(new InstantCommand(m_collectorSubsystem::spinForward));
         m_xboxB.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
         m_xboxStart.whenPressed(new InstantCommand(m_collectorSubsystem::spinBackward));
         m_xboxStart.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
+
+        m_xboxRightBumper.whenPressed(new InstantCommand(m_driveSubsystem::toggleDriveMode));
+
+        // Alt Xbox Controls
+        m_altXboxA.whenPressed(new InstantCommand(m_armSubsystem::goToCollectPosition));
+        m_altXboxX.whenPressed(new InstantCommand(m_armSubsystem::goToDrivePosition));
+        m_altXboxY.whenPressed(new InstantCommand(m_armSubsystem::goToDumpPosition));
+
+        m_altXboxB.whenHeld(new InstantCommand(m_collectorSubsystem::spinForward));
+        m_altXboxB.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
+        m_altXboxStart.whenPressed(new InstantCommand(m_collectorSubsystem::spinBackward));
+        m_altXboxStart.whenReleased(new InstantCommand(m_collectorSubsystem::stop));
     }
 }
